@@ -4,6 +4,7 @@ import { ProductsModule } from './products/products.module';
 
 @Module({
   imports: [
+    ProductsModule,
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: 'localhost',
@@ -12,9 +13,8 @@ import { ProductsModule } from './products/products.module';
       password: 'asad',
       database: 'product_inventory_db',
       autoLoadEntities: true,
-      synchronize: true, 
+      synchronize: true,
     }),
-    ProductsModule,
   ],
 })
 export class AppModule {}

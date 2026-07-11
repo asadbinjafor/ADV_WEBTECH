@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, ILike } from 'typeorm';
+import { ILike, Repository } from 'typeorm';
 import { Products } from './entities/products.entity';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
@@ -10,12 +10,13 @@ import { PartialUpdateProductDto } from './dto/partial-update-product.dto';
 export class ProductsService {
   constructor(
     @InjectRepository(Products)
-    private productsRepo: Repository<Products>,
+    private readonly productsRepo: Repository<Products>,
   ) {}
 
   async create(dto: CreateProductDto) {
     const product = this.productsRepo.create(dto);
     const savedProduct = await this.productsRepo.save(product);
+
     return {
       message: 'Product created successfully',
       data: savedProduct,
@@ -24,20 +25,27 @@ export class ProductsService {
 
   async findAll() {
     const products = await this.productsRepo.find({
-      order: { createdAt: 'DESC' },
+      order: {
+        createdAt: 'DESC',
+      },
     });
+
     return {
-      message: 'Products fetched successfully',
+      message: 'All products fetched successfully',
       count: products.length,
       data: products,
     };
   }
 
   async findOne(id: number) {
-    const product = await this.productsRepo.findOne({ where: { id } });
+    const product = await this.productsRepo.findOne({
+      where: { id },
+    });
+
     if (!product) {
       throw new NotFoundException(`Product with id ${id} not found`);
     }
+
     return {
       message: 'Product fetched successfully',
       data: product,
@@ -45,12 +53,16 @@ export class ProductsService {
   }
 
   async update(id: number, dto: PartialUpdateProductDto) {
-    const product = await this.productsRepo.findOne({ where: { id } });
+    const product = await this.productsRepo.findOne({
+      where: { id },
+    });
+
     if (!product) {
       throw new NotFoundException(`Product with id ${id} not found`);
     }
 
     Object.assign(product, dto);
+
     const updatedProduct = await this.productsRepo.save(product);
 
     return {
@@ -60,27 +72,35 @@ export class ProductsService {
   }
 
   async replace(id: number, dto: UpdateProductDto) {
-    const product = await this.productsRepo.findOne({ where: { id } });
+    const product = await this.productsRepo.findOne({
+      where: { id },
+    });
+
     if (!product) {
       throw new NotFoundException(`Product with id ${id} not found`);
     }
 
     Object.assign(product, dto);
-    const updatedProduct = await this.productsRepo.save(product);
+
+    const replacedProduct = await this.productsRepo.save(product);
 
     return {
       message: 'Product replaced successfully',
-      data: updatedProduct,
+      data: replacedProduct,
     };
   }
 
   async remove(id: number) {
-    const product = await this.productsRepo.findOne({ where: { id } });
+    const product = await this.productsRepo.findOne({
+      where: { id },
+    });
+
     if (!product) {
       throw new NotFoundException(`Product with id ${id} not found`);
     }
 
     await this.productsRepo.delete(id);
+
     return {
       message: 'Product deleted successfully',
       id: id,
@@ -90,10 +110,13 @@ export class ProductsService {
   async findByCategory(category: string) {
     const products = await this.productsRepo.find({
       where: { category },
-      order: { createdAt: 'DESC' },
+      order: {
+        createdAt: 'DESC',
+      },
     });
+
     return {
-      message: `Products in category '${category}' fetched successfully`,
+      message: `Products in category ${category} fetched successfully`,
       count: products.length,
       data: products,
     };
@@ -104,26 +127,33 @@ export class ProductsService {
       where: {
         name: ILike(`%${keyword}%`),
       },
-      order: { createdAt: 'DESC' },
+      order: {
+        createdAt: 'DESC',
+      },
     });
+
     return {
-      message: `Products containing '${keyword}' fetched successfully`,
+      message: `Products matching keyword ${keyword} fetched successfully`,
       count: products.length,
       data: products,
     };
   }
 
   async toggleActive(id: number) {
-    const product = await this.productsRepo.findOne({ where: { id } });
+    const product = await this.productsRepo.findOne({
+      where: { id },
+    });
+
     if (!product) {
       throw new NotFoundException(`Product with id ${id} not found`);
     }
 
     product.isActive = !product.isActive;
+
     const updatedProduct = await this.productsRepo.save(product);
 
     return {
-      message: `Product ${updatedProduct.isActive ? 'activated' : 'deactivated'} successfully`,
+      message: 'Product active status toggled successfully',
       data: updatedProduct,
     };
   }
