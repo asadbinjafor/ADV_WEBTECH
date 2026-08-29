@@ -1,0 +1,57 @@
+:root {
+  --navy: #233148;
+  --blue: #2e6da4;
+  --sky: #e5f0f8;
+  --line: #d8e1e8;
+  --muted: #728094;
+  --paper: #ffffff;
+  --yellow: #f7c95f;
+  --green: #78b89b;
+  --orange: #e79a5d;
+}
+
+.app-shell { max-width: 1180px; margin: 0 auto; padding: 42px 56px 30px; }
+.dashboard-header { display: flex; align-items: center; gap: 22px; padding-bottom: 34px; border-bottom: 1px solid var(--line); }
+.brand-mark { width: 58px; height: 58px; display: grid; place-items: center; flex: 0 0 auto; background: var(--navy); color: white; font: 700 18px Georgia, serif; letter-spacing: 1px; }
+.eyebrow { margin: 0 0 7px; color: var(--blue); font: 700 11px/1.2 Arial, sans-serif; letter-spacing: 2.5px; text-transform: uppercase; }
+h1, h2, p { margin-top: 0; }
+h1 { margin-bottom: 5px; color: var(--navy); font-size: clamp(30px, 4vw, 48px); line-height: 1; }
+.tagline, .major, .welcome-row p { color: var(--muted); font-family: Arial, sans-serif; font-size: 14px; }
+.tagline { margin-bottom: 0; }
+.header-date { margin-left: auto; padding-left: 30px; border-left: 1px solid var(--line); color: var(--muted); font: 12px Arial, sans-serif; text-align: right; }
+.header-date strong { display: block; margin-top: 5px; color: var(--navy); font: 700 15px Georgia, serif; }
+.welcome-row { display: flex; justify-content: space-between; align-items: end; gap: 20px; padding: 43px 0 26px; }
+.welcome-row h2 { margin-bottom: 5px; color: var(--navy); font-size: 26px; }
+.welcome-row p { margin-bottom: 0; }
+.overview-stats { display: flex; gap: 32px; }
+.stat-badge { display: flex; flex-direction: column; gap: 3px; min-width: 72px; }
+.stat-badge strong { color: var(--blue); font-size: 26px; line-height: 1; }
+.stat-badge span { color: var(--muted); font: 11px Arial, sans-serif; text-transform: uppercase; letter-spacing: 1px; }
+.student-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+.student-card { padding: 25px; background: var(--paper); border: 1px solid var(--line); border-top: 4px solid var(--yellow); box-shadow: 0 10px 25px rgba(35, 49, 72, .06); transition: transform .2s ease, box-shadow .2s ease; }
+.student-card:nth-child(2) { border-top-color: var(--green); }
+.student-card:nth-child(3) { border-top-color: var(--orange); }
+.student-card:hover { transform: translateY(-3px); box-shadow: 0 14px 28px rgba(35, 49, 72, .11); }
+.student-topline { display: flex; align-items: center; gap: 14px; }
+.avatar { width: 48px; height: 48px; display: grid; place-items: center; flex: 0 0 auto; border-radius: 50%; background: var(--sky); color: var(--blue); font: 700 14px Arial, sans-serif; }
+.student-card h2 { margin-bottom: 4px; color: var(--navy); font-size: 21px; }
+.major { margin-bottom: 0; }
+.menu-dot { margin-left: auto; align-self: flex-start; color: #aab5c0; font: 700 18px Arial, sans-serif; letter-spacing: 2px; }
+.student-stats { display: flex; gap: 42px; margin: 25px 0; padding: 17px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.student-stats .stat-badge strong { font-size: 22px; }
+.courses .eyebrow { margin-bottom: 11px; color: var(--muted); letter-spacing: 1.5px; }
+.course-list { display: flex; flex-wrap: wrap; gap: 8px; }
+.course-tag { padding: 7px 10px; font: 700 11px Arial, sans-serif; letter-spacing: .2px; }
+.course-tag.blue { background: #e3eff8; color: #286593; }
+.course-tag.green { background: #e4f2eb; color: #38785b; }
+.course-tag.orange { background: #fbeadc; color: #ad652d; }
+footer { padding-top: 34px; color: #98a5b2; font: 11px Arial, sans-serif; text-align: center; }
+footer span { padding: 0 6px; color: var(--yellow); }
+
+@media (max-width: 700px) {
+  .app-shell { padding: 24px 18px; }
+  .dashboard-header { align-items: flex-start; flex-wrap: wrap; gap: 15px; }
+  .header-date { width: 100%; margin: 4px 0 0 73px; padding: 12px 0 0; border-left: 0; border-top: 1px solid var(--line); text-align: left; }
+  .welcome-row { align-items: flex-start; flex-direction: column; padding-top: 30px; }
+  .student-grid { grid-template-columns: 1fr; }
+}
